@@ -20,6 +20,7 @@ class StarScreen extends StatelessWidget {
                 image: AssetImage('assets/images/background_star.png'),
                 fit: BoxFit.cover),
           ),
+         
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

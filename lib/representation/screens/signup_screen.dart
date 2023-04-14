@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_travel_app/representation/screens/signup_screen.dart';
+import 'package:flutter_travel_app/representation/screens/login_screen.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/constants/color_constants.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   var formKey = GlobalKey<FormState>();
+  var usernameController = TextEditingController();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   var isObsecure = true.obs;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: LayoutBuilder(
         builder: (context, cons) {
           return ConstrainedBox(
@@ -32,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 150),
                     child: Text(
-                      "Login",
+                      "Sign Up",
                       style: GoogleFonts.poppins(
                         fontSize: 30,
                         fontWeight: FontWeight.w700,
@@ -107,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 10,
                   ),
                   Text(
-                    'Or log in using',
+                    'Or Sign Up using',
                     style: GoogleFonts.roboto(
                       fontWeight: FontWeight.w400,
                       fontSize: 12,
@@ -121,6 +123,27 @@ class _LoginScreenState extends State<LoginScreen> {
                           key: formKey,
                           child: Column(
                             children: [
+                              TextFormField(
+                                controller: usernameController,
+                                validator: (val)=>
+                                val == "" ? "Please write username" : null,
+                                decoration: const InputDecoration(
+                                  hintText: "Username",
+                                  hintStyle: TextStyle(
+                                    color: Colorpalette.buttonColor,
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colorpalette.buttonColor),
+                                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colorpalette.buttonColor),
+                                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                                  ),
+                                  prefixIcon: Icon(Icons.person, color: Colorpalette.buttonColor,)
+                                ),
+                              ),
+                              const SizedBox(height: 20,),
                               TextFormField(
                                 controller: emailController,
                                 validator: (val) =>
@@ -204,12 +227,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(30)),
                                     ),
-                                    disabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          color: Colorpalette.buttonColor),
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                 
                                   ),
                                 ),
                               ),
@@ -233,10 +250,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 color: Colorpalette.buttonColor,
                                 borderRadius: BorderRadius.circular(30),
                                 child: InkWell(
-                                  onTap: () {
-                                    if (formKey.currentState!.validate()) {
-                                    }
-                                  },
+                                  onTap: () {},
                                   borderRadius: BorderRadius.circular(30),
                                   child: const Padding(
                                     padding: EdgeInsets.symmetric(
@@ -252,28 +266,27 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 ),
                               ),
-                             
                               Padding(
-                                padding: const EdgeInsets.only(top: 300),
+                                padding: const EdgeInsets.only(top: 200),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text("Dont have an account?",
+                                    Text("Already have an account?",
                                         style: GoogleFonts.roboto(
                                           fontWeight: FontWeight.w400,
                                           fontSize: 12,
                                         )),
-                                        TextButton(
-                                          onPressed: (){
-                                            Navigator.push(context,MaterialPageRoute(builder: (context)=>const SignUpScreen()));
-                                          },
-                                          child: Text("Sign Up",
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.push(context, MaterialPageRoute(builder: (context)=> const LoginScreen()),);
+                                      },
+                                      child: Text("Sign in",
                                           style: GoogleFonts.roboto(
                                             fontWeight: FontWeight.w400,
                                             fontSize: 12,
                                             color: Colorpalette.buttonColor,
                                           )),
-                                        ),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -289,8 +302,6 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         },
       ),
-
-      // AppBar
     );
   }
 }
