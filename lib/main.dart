@@ -1,8 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_travel_app/representation/screens/star_screen.dart';
+import 'package:flutter_travel_app/representation/screens/listproduct_screen.dart';
+import 'package:flutter_travel_app/routes.dart';
+
+import 'core/size_config.dart';
 
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -13,9 +19,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     
-    return const MaterialApp(
+    return  MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: StarScreen(),
+      routes: routes,
+      home: Builder(
+        builder: (context)
+        {
+          SizeConfig.init(context);
+          return const ListProduct();
+        },
+      ),
     );
   }
 }

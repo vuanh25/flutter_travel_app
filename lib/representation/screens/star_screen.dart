@@ -71,7 +71,7 @@ class StarScreen extends StatelessWidget {
               const SizedBox(height: 400.0),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const IntroScreen()),);
+                  Navigator.of(context).pushNamed(IntroScreen.routeName);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colorpalette.buttonColor,

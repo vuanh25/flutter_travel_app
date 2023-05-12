@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_travel_app/core/constants/color_constants.dart';
 import 'package:flutter_travel_app/model/appbaner.dart';
 import 'package:flutter_travel_app/representation/screens/login_screen.dart';
+import 'package:flutter_travel_app/representation/screens/signup_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../model/banneritem.dart';
@@ -10,7 +11,7 @@ import '../../model/indicator.dart';
 
 class IntroScreen extends StatefulWidget {
   const IntroScreen({Key? key}) : super(key: key);
-
+  static String routeName = '/intro_screen';
   @override
   State<IntroScreen> createState() => _IntroScreenState();
 }
@@ -120,7 +121,7 @@ class _IntroScreenState extends State<IntroScreen> {
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> const LoginScreen()));
+                Navigator.of(context).pushNamed(LoginScreen.routeName);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colorpalette.buttonColor,
@@ -144,7 +145,9 @@ class _IntroScreenState extends State<IntroScreen> {
               height: 20,
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(SignUpScreen.routeName);
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(

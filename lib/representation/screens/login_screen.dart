@@ -1,5 +1,10 @@
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_travel_app/representation/screens/homepage_screen.dart';
 import 'package:flutter_travel_app/representation/screens/signup_screen.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -7,6 +12,7 @@ import '../../core/constants/color_constants.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+  static String routeName = '/login_screen';
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -17,6 +23,31 @@ class _LoginScreenState extends State<LoginScreen> {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   var isObsecure = true.obs;
+  var email;
+  var password;
+
+  void validation() async
+  {
+    final FormState form = formKey.currentState!;
+    if (form.validate()) {
+      try
+      {
+         UserCredential result = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+         print(result);
+         Fluttertoast.showToast(msg: 'Đăng nhập thành công!');
+         Navigator.of(context).pushNamed(HomePage.routerName);
+       
+     
+      }
+      on PlatformException catch(e)
+      {
+        print(e.toString());
+      }
+     
+    } else {
+    
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,6 +154,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: [
                               TextFormField(
                                 controller: emailController,
+                                onChanged: (value) {
+                                  email = value;
+                                },
                                 validator: (val) =>
                                     val == "" ? "Please write email" : null,
                                 decoration: const InputDecoration(
@@ -168,6 +202,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 () => TextFormField(
                                   controller: passwordController,
                                   obscureText: isObsecure.value,
+                                  onChanged: (value) {
+                                    password = value;
+                                  },
                                   validator: (val) => val == ""
                                       ? "Please write password"
                                       : null,
@@ -235,6 +272,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 child: InkWell(
                                   onTap: () {
                                     if (formKey.currentState!.validate()) {
+                                      validation();
                                     }
                                   },
                                   borderRadius: BorderRadius.circular(30),
@@ -254,7 +292,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                              
                               Padding(
-                                padding: const EdgeInsets.only(top: 300),
+                                padding: const EdgeInsets.only(top: 250),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
